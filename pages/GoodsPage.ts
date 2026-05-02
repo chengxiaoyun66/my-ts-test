@@ -26,7 +26,7 @@ export class GoodsPage {
   async navigateToGoods() {
     // 如果你的登录后直接有货品菜单，可以简化下面的步骤；否则保留旧脚本中的导航逻辑
     await this.page.getByRole('button', { name: '进入' }).nth(1).click();
-    // await this.page.getByText('收起').click();
+    // await this.page.getByText('收起').click(); 
     // 判断“收起”按钮是否可见，如果可见则点击
     const hideBtn = this.page.getByText('收起');
     if (await hideBtn.isVisible({ timeout: 3000 }).catch(() => false)) {
