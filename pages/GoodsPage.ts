@@ -75,7 +75,6 @@ async selectSize() {
   await checkbox.check({ timeout: 5000 });
 
   // 3. 点击尺码弹窗中的“确定”按钮（关闭弹窗）
-  // 根据你的页面，按钮文字可能是“确 定”或“确定”，且可能在 .el-dialog__footer 中
   const sizeConfirmBtn = this.page.locator('.el-dialog__footer .el-button--primary, button:has-text("确 定")').first();
   await sizeConfirmBtn.click();
 
