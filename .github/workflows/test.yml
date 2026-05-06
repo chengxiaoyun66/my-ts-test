@@ -15,15 +15,26 @@ jobs:
         with:
           node-version: 18
       - run: npm ci
-      - run: npx playwright install --with-deps           # 安装浏览器
-      # - run: npx playwright test e2e/goods-flow.spec.ts   # 运行指定文件测试
-      - run: npx playwright test        # 运行测试
-      
+      - run: npx playwright install --with-deps
+
       - name: Check website availability
         run: curl -I https://test.piyuan.cn/ || true
 
-      - name: Run Playwright tests (with trace)
+      - name: Run Playwright tests (with trace & HTML report)
         run: npx playwright test --trace on
+        env:
+          TEST_PHONE: ${{ secrets.TEST_PHONE }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+          TEST_PRICE: ${{ secrets.TEST_PRICE }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+
+      - name: Upload Playwright HTML Report
+        uses: actions/upload-artifact@v4
+        if: always()   # 无论成功或失败都上传报告
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
 
       - name: Upload trace on failure
         if: failure()

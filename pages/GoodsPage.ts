@@ -24,18 +24,21 @@ export class GoodsPage {
 
   // 导航到货品列表页（可根据实际页面结构调整）
   async navigateToGoods() {
-    // 如果你的登录后直接有货品菜单，可以简化下面的步骤；否则保留旧脚本中的导航逻辑
+    // 进入产研
     await this.page.getByRole('button', { name: '进入' }).nth(1).click();
-    // await this.page.getByText('收起').click(); 
     // 判断“收起”按钮是否可见，如果可见则点击
+    // 收起通知弹窗
     const hideBtn = this.page.getByText('收起');
     if (await hideBtn.isVisible({ timeout: 3000 }).catch(() => false)) {
     await hideBtn.click();
     }
     await this.page.getByRole('button', { name: '进入' }).first().click();
+    // 展开货品导航栏
     await this.page.getByRole('menubar').locator('div').filter({ hasText: /^货品$/ }).dblclick();
+    // 点击货品菜单
     await this.page.getByRole('menubar').locator('div').filter({ hasText: /^货品$/ }).click();
     await this.page.getByRole('menuitem', { name: ' 货品' }).locator('span').click();
+
   }
 
   async openNewGoodsDialog() {

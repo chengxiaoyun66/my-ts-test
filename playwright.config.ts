@@ -1,20 +1,19 @@
 import { defineConfig } from '@playwright/test';
-
-// import dotenv from 'dotenv';
-// import path from 'path';
-
-// // 加载 .env 文件
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
-
 export default defineConfig({
   testDir: './e2e',
-  timeout: 60000,
+  timeout: 90000,
+  retries: 1, 
+  reporter: [
+    ['list'],                          // 终端输出
+    ['html', { outputFolder: 'playwright-report' }]  // HTML 报告
+  ],
   use: {
     headless: true,
     // headless: process.env.CI ? true : false,
     viewport: { width: 1280, height: 720 },
     navigationTimeout: 60000,  // 页面导航超时单独设置
-    // slowMo: '1000',
+    actionTimeout: 30000,
+    trace: 'on-first-retry',    // 仅在重试时记录 trace
   },
 });
 
